@@ -9,6 +9,7 @@ import lombok.*;
 @Entity
 @Table(name = "telegram_user")
 public class UserEntity {
+
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)

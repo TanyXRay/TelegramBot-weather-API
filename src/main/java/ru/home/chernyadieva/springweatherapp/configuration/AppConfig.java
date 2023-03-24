@@ -12,13 +12,11 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
-import ru.home.chernyadieva.springweatherapp.service.LocationService;
 import ru.home.chernyadieva.springweatherapp.service.SendBotMessageService;
-import ru.home.chernyadieva.springweatherapp.service.UserService;
 import ru.home.chernyadieva.springweatherapp.service.command.LocationUpdateCommand;
 import ru.home.chernyadieva.springweatherapp.service.command.StartCommand;
+import ru.home.chernyadieva.springweatherapp.service.command.WeatherCommand;
 import ru.home.chernyadieva.springweatherapp.util.client.RestTemplateLoggingInterceptor;
-import ru.home.chernyadieva.springweatherapp.util.client.WeatherApiClient;
 
 import java.nio.charset.StandardCharsets;
 
@@ -32,13 +30,11 @@ public class AppConfig {
     private String botToken;
 
     @Bean
-    public SendBotMessageService messageListenerService(UserService userService,
-                                                        LocationService locationService,
-                                                        TelegramBot telegramBotSender,
-                                                        WeatherApiClient weatherApiClient,
-                                                        StartCommand startCommand,
-                                                        LocationUpdateCommand locationUpdateCommand) {
-        return new SendBotMessageService(userService, locationService, telegramBotSender, weatherApiClient, startCommand, locationUpdateCommand);
+    public SendBotMessageService messageListenerService(StartCommand startCommand,
+                                                        LocationUpdateCommand locationUpdateCommand,
+                                                        WeatherCommand weatherCommand,
+                                                        TelegramBot telegramBotSender) {
+        return new SendBotMessageService(startCommand, locationUpdateCommand, weatherCommand, telegramBotSender);
     }
 
     @Bean

@@ -14,15 +14,16 @@ public class StartCommand implements Command {
     private final UserService userService;
     private final TelegramBot telegramBotSender;
 
-    public final static String START_MESSAGE = "Привет. Я Weather Telegram Bot.\n " +
-            "Я помогу тебе узнать погоду в твоем городе.\n\n" +
-            "отправь в ответ геопозицию, чтобы узнать текущую погоду.\n";
+    public final static String START_MESSAGE = "Отправь в ответ в закрепе геопозицию, чтобы узнать текущую погоду.\n";
 
     public StartCommand(UserService userService, TelegramBot telegramBotSender) {
         this.telegramBotSender = telegramBotSender;
         this.userService = userService;
     }
-
+    /**
+     * Метод добавления нового пользователя в БД
+     * @param message
+     */
     @Override
     public void execute(Message message) {
         Long userId = message.from().id();
@@ -39,6 +40,7 @@ public class StartCommand implements Command {
 
             return user;
         });
+
         telegramBotSender.execute(new SendMessage(userId, START_MESSAGE));
     }
 }

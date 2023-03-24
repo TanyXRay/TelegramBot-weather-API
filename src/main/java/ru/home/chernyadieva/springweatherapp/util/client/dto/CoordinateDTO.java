@@ -1,5 +1,6 @@
 package ru.home.chernyadieva.springweatherapp.util.client.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -8,12 +9,16 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class CoordinateDTO {
-    public double lon;
-    public double lat;
+
+    @JsonProperty(value = "lon")
+    private double lon;
+
+    @JsonProperty(value = "lat")
+    private double lat;
 
     @Override
     public String toString() {
-        return "\n широта = " + lon +
-                "\n долгота = " + lat;
+        return "\nширота = " + lon +
+                "\nдолгота = " + lat;
     }
 }

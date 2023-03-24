@@ -9,20 +9,21 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class OpenWeatherDTO {
+
     @JsonProperty(value = "coord")
-    public CoordinateDTO coordinate;
+    private CoordinateDTO coordinate;
 
     @JsonProperty(value = "main")
-    public TemperatureDTO main;
+    private TemperatureDTO main;
 
     @JsonProperty(value = "sys")
-    public CountryDTO country;
+    private CountryDTO country;
 
     @JsonProperty(value = "name")
-    public String city;
+    private String city;
 
     @Override
     public String toString() {
-        return "\n город = " + city;
+        return "\nгород = " + city;
     }
 }

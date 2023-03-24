@@ -11,4 +11,5 @@ public interface LocationEntityRepository extends JpaRepository<LocationEntity, 
 
     Optional<LocationEntity> findByUserId(long userId);
 
+    Optional<LocationEntity> findByUserIdAndUserLocationId(long userId, int locationId);
 }

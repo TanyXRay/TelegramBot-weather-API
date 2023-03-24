@@ -9,23 +9,24 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class TemperatureDTO {
+
     @JsonProperty(value = "temp")
-    public double temp;
+    private double temp;
 
     @JsonProperty(value = "feels_like")
-    public double feels_like;
+    private double feels_like;
 
     @JsonProperty(value = "pressure")
-    public int pressure;
+    private int pressure;
 
     @JsonProperty(value = "humidity")
-    public double humidity;
+    private double humidity;
 
     @Override
     public String toString() {
-        return "\n температура = " + Math.round(temp) +
-                "\n ощущается как = " + Math.round(feels_like) +
-                "\n атм. давление = " + pressure +
-                "\n влажность = " + humidity;
+        return "\nтемпература = " + Math.round(temp) +
+                "\nощущается как = " + Math.round(feels_like) +
+                "\nатм. давление = " + pressure +
+                "\nвлажность = " + humidity;
     }
 }

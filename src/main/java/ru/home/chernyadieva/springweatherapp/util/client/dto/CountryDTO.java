@@ -9,11 +9,12 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class CountryDTO {
+
     @JsonProperty(value = "country")
-    public String country;
+    private String country;
 
     @Override
     public String toString() {
-        return "\n страна = " + country;
+        return "\nстрана = " + country;
     }
 }

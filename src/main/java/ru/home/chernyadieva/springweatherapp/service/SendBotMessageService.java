@@ -4,33 +4,26 @@ import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.UpdatesListener;
 import com.pengrad.telegrambot.model.Message;
 import com.pengrad.telegrambot.model.Update;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-import ru.home.chernyadieva.springweatherapp.service.command.CommandName;
-import ru.home.chernyadieva.springweatherapp.service.command.LocationUpdateCommand;
-import ru.home.chernyadieva.springweatherapp.service.command.StartCommand;
-import ru.home.chernyadieva.springweatherapp.util.client.WeatherApiClient;
+import ru.home.chernyadieva.springweatherapp.service.command.*;
 
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class SendBotMessageService implements UpdatesListener {
-    private final UserService userService;
-    private final LocationService locationService;
-    private final TelegramBot telegramBotSender;
-    private final WeatherApiClient weatherApiClient;
     private final StartCommand startCommand;
     private final LocationUpdateCommand locationUpdateCommand;
+    private final WeatherCommand weatherCommand;
+    private final TelegramBot telegramBotSender;
 
-    public SendBotMessageService(UserService userService,
-                                 LocationService locationService,
-                                 @Qualifier(value = "telegramBotSender") TelegramBot telegramBotSender, WeatherApiClient weatherApiClient, StartCommand startCommand, LocationUpdateCommand locationUpdateCommand) {
-        this.userService = userService;
-        this.locationService = locationService;
-        this.telegramBotSender = telegramBotSender;
-        this.weatherApiClient = weatherApiClient;
+    public SendBotMessageService(StartCommand startCommand,
+                                 LocationUpdateCommand locationUpdateCommand,
+                                 WeatherCommand weatherCommand, TelegramBot telegramBotSender) {
         this.startCommand = startCommand;
         this.locationUpdateCommand = locationUpdateCommand;
+        this.weatherCommand = weatherCommand;
+        this.telegramBotSender = telegramBotSender;
     }
 
     /**
@@ -43,15 +36,29 @@ public class SendBotMessageService implements UpdatesListener {
     public int process(List<Update> updates) {
         for (Update update : updates) {
             Message message = update.message();
-            if (message.text().isEmpty()){
-                return CONFIRMED_UPDATES_ALL;
-            }
-            if (message.text().equalsIgnoreCase(CommandName.START.getCommandName())){
-                startCommand.execute(message);
-            }
-            locationUpdateCommand.execute(message,message.location());
+            String msg = message.text();
 
+            if (Objects.nonNull(msg) && !msg.isEmpty()) {
 
+                if (msg.equalsIgnoreCase(CommandName.START.getCommandName())) {
+                    startCommand.execute(message);
+                    continue;
+                }
+
+                if (msg.equalsIgnoreCase(CommandName.WEATHER.getCommandName())) {
+                    weatherCommand.execute(message);
+                    continue;
+                }
+
+                if (msg.equalsIgnoreCase(CommandName.GET_LOCATION.getCommandName())) {
+                    locationUpdateCommand.getCurrentLocation(message);
+                } else {
+                    locationUpdateCommand.getCurrentLocationFromCity(message);
+                }
+
+            } else if (Objects.nonNull(message.location())) {
+                locationUpdateCommand.execute(message);
+            }
         }
         return CONFIRMED_UPDATES_ALL;
     }
