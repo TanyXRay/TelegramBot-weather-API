@@ -13,15 +13,14 @@ import ru.home.chernyadieva.springweatherapp.util.client.exception.UserNotFoundE
 
 import java.util.Objects;
 
-import static ru.home.chernyadieva.springweatherapp.service.command.LocationUpdateCommand.NOT_FOUND_LOCATION_MESSAGE;
-
 @Component
 public class WeatherCommand implements Command {
     private final UserService userService;
     private final TelegramBot telegramBotSender;
     private final WeatherAPIClient weatherApiClient;
 
-    public final static String GET_WEATHER_MESSAGE = "Текущая погода:\n";
+    private final static String GET_WEATHER_MESSAGE = "Текущая погода:\n";
+    private final static String NOT_FOUND_LOCATION_MESSAGE = "Локация не найдена! Добавь ее в закрепе геолокации в чате";
 
     public WeatherCommand(UserService userService, TelegramBot telegramBotSender, WeatherAPIClient weatherApiClient) {
         this.telegramBotSender = telegramBotSender;
@@ -31,6 +30,7 @@ public class WeatherCommand implements Command {
 
     /**
      * Метод предоставления текущей погоды
+     *
      * @param message
      */
     @Override

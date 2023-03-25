@@ -14,14 +14,16 @@ public class StartCommand implements Command {
     private final UserService userService;
     private final TelegramBot telegramBotSender;
 
-    public final static String START_MESSAGE = "Отправь в ответ в закрепе геопозицию, чтобы узнать текущую погоду.\n";
+    private final static String START_MESSAGE = "Отправь в ответ в закрепе геопозицию, чтобы узнать текущую погоду.\n";
 
     public StartCommand(UserService userService, TelegramBot telegramBotSender) {
         this.telegramBotSender = telegramBotSender;
         this.userService = userService;
     }
+
     /**
      * Метод добавления нового пользователя в БД
+     *
      * @param message
      */
     @Override

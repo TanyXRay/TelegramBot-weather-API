@@ -12,6 +12,7 @@ import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import org.springframework.web.client.RestTemplate;
+import ru.home.chernyadieva.springweatherapp.service.CommandSendMessageFactory;
 import ru.home.chernyadieva.springweatherapp.service.SendBotMessageService;
 import ru.home.chernyadieva.springweatherapp.service.command.LocationUpdateCommand;
 import ru.home.chernyadieva.springweatherapp.service.command.StartCommand;
@@ -33,8 +34,9 @@ public class AppConfig {
     public SendBotMessageService messageListenerService(StartCommand startCommand,
                                                         LocationUpdateCommand locationUpdateCommand,
                                                         WeatherCommand weatherCommand,
-                                                        TelegramBot telegramBotSender) {
-        return new SendBotMessageService(startCommand, locationUpdateCommand, weatherCommand, telegramBotSender);
+                                                        TelegramBot telegramBotSender,
+                                                        CommandSendMessageFactory factory) {
+        return new SendBotMessageService(startCommand, locationUpdateCommand, weatherCommand, telegramBotSender, factory);
     }
 
     @Bean

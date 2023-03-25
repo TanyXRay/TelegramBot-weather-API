@@ -28,16 +28,16 @@ public class LocationUpdateCommand implements Command {
             "Или нажимай /getLocation, чтобы узнать текущее точное местоположение." +
             "Также можешь ввести наименование твоего города (на англ. языке), чтобы обновить локацию. :)";
 
-    public final static String GET_CURRENT_LOCATION_MESSAGE = "Точное текущее местоположение:\n";
+    private final static String GET_CURRENT_LOCATION_MESSAGE = "Точное текущее местоположение:\n";
 
-    public final static String NOT_FOUND_LOCATION_MESSAGE = "Локация не найдена! Добавь ее в закрепе геолокации в чате";
+    private final static String NOT_FOUND_LOCATION_MESSAGE = "Локация не найдена! Добавь ее в закрепе геолокации в чате";
 
-    public final static String NOT_FOUND_CITY_MESSAGE = "Такой город не найден!";
+    private final static String NOT_FOUND_CITY_MESSAGE = "Такой город не найден!";
 
-    public LocationUpdateCommand(UserService userService,
-                                 TelegramBot telegramBotSender,
-                                 WeatherAPIClient weatherApiClient,
-                                 LocationService locationService) {
+    private LocationUpdateCommand(UserService userService,
+                                  TelegramBot telegramBotSender,
+                                  WeatherAPIClient weatherApiClient,
+                                  LocationService locationService) {
         this.telegramBotSender = telegramBotSender;
         this.userService = userService;
         this.weatherApiClient = weatherApiClient;
@@ -48,6 +48,7 @@ public class LocationUpdateCommand implements Command {
      * Метод добавления новой локации пользователя,
      * если локация у такого пользователя существует,
      * то в БД происходит обновление
+     *
      * @param message
      */
     @Override
@@ -99,6 +100,7 @@ public class LocationUpdateCommand implements Command {
 
     /**
      * Метод предоставления текущей локации из БД
+     *
      * @param message
      */
     public void getCurrentLocation(Message message) {
@@ -115,8 +117,10 @@ public class LocationUpdateCommand implements Command {
         telegramBotSender.execute(new SendMessage(message.from().id(), GET_CURRENT_LOCATION_MESSAGE +
                 openWeatherDTO.getCoordinate() + openWeatherDTO + openWeatherDTO.getCountry()));
     }
+
     /**
      * Метод предоставления текущей локации из БД согласно введенному наименованию города
+     *
      * @param message
      */
     public void getCurrentLocationFromCity(Message message) {

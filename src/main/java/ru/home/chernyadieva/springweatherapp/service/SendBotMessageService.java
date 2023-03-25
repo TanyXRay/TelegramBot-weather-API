@@ -16,14 +16,16 @@ public class SendBotMessageService implements UpdatesListener {
     private final LocationUpdateCommand locationUpdateCommand;
     private final WeatherCommand weatherCommand;
     private final TelegramBot telegramBotSender;
+    private final CommandSendMessageFactory factory;
 
     public SendBotMessageService(StartCommand startCommand,
                                  LocationUpdateCommand locationUpdateCommand,
-                                 WeatherCommand weatherCommand, TelegramBot telegramBotSender) {
+                                 WeatherCommand weatherCommand, TelegramBot telegramBotSender, CommandSendMessageFactory factory) {
         this.startCommand = startCommand;
         this.locationUpdateCommand = locationUpdateCommand;
         this.weatherCommand = weatherCommand;
         this.telegramBotSender = telegramBotSender;
+        this.factory = factory;
     }
 
     /**

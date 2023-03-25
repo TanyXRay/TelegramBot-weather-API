@@ -36,3 +36,7 @@ build/
 /src/main/resources/application-dev.yaml
 /src/main/resources/application.yaml
 /src/test/java/ru/home/chernyadieva/springweatherapp/SpringWeatherAppBotApplicationTestsDTO.java
+/mvnw
+/mvnw.cmd
+/.mvn/wrapper/maven-wrapper.jar
+/.mvn/wrapper/maven-wrapper.properties
